@@ -1,0 +1,23 @@
+{
+  "steps": {
+    "1": {
+      "filter": "read.js",
+      "params": ["./text.txt"],
+      "next": "2"
+    },
+    "2": {
+      "filter": "capitalize.js",
+      "params": [],
+      "next": "3"
+    },
+    "3": {
+      "filter": "reverse.js",
+      "params": [],
+      "next": "4"
+    },
+    "4": {
+      "filter": "write.js",
+      "params": ["./text.txt"]
+    }
+  }
+}

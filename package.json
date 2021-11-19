@@ -1,0 +1,28 @@
+{
+  "name": "architecture_tp_6_part_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lilian-MMI/architecture_tp_6_part_2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lilian-MMI/architecture_tp_6_part_2/issues"
+  },
+  "homepage": "https://github.com/Lilian-MMI/architecture_tp_6_part_2#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.3.0",
+    "conf": "^10.0.3",
+    "ncp": "^2.0.0"
+  },
+  "bin": {
+    "ppft": "app.js"
+  }
+}
