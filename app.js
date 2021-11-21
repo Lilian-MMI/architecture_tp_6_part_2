@@ -38,8 +38,8 @@ try {
     .alias("as")
     .arguments("<idStep>", "ID du step")
     .arguments("<filterName>", "Le nom du filtre")
-    .arguments("[projectName]", "Le nom du projet")
     .arguments("[nextStepId]", "ID du prochain step")
+    .arguments("[projectName]", "Le nom du projet")
     .description(
       `Ajoute une step au fichier de configuration. Cette commande prend les paramètres suivants : id de step unique - nom de filter - nom de projet - id step suivante (si nécessaire)`
     )

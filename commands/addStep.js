@@ -2,7 +2,7 @@ const fs = require("fs");
 const conf = new (require("conf"))();
 const chalk = require("chalk");
 
-function addStep(idStep, filterName, projectName, nextStepId) {
+function addStep(idStep, filterName, nextStepId, projectName) {
   if (!projectName) {
     currentProject = conf.get("project-list").find((project) => project.active);
 
@@ -35,7 +35,7 @@ function addStep(idStep, filterName, projectName, nextStepId) {
     params: [],
   };
 
-  if (nextStepId) stepObject["nextStepId"] = nextStepId;
+  if (nextStepId) stepObject["next"] = new Array(nextStepId);
 
   configFilter.steps[idStep] = stepObject;
 
