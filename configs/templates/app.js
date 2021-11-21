@@ -1,73 +1,106 @@
 const fs = require("fs");
 const steps = require("./config-filters.json").steps;
 const filtersFolder = "./filters/";
+const { Worker } = require("worker_threads");
+const chalk = require("chalk");
 
 try {
+  // generate random number between params
+  const randomBetween = (min, max) =>
+    min + Math.floor(Math.random() * (max - min + 1));
+  
   const callFilter = (filter, key, ...args) => {
-    // check if filter exists else throw error
-    const isFilterValid = fs
-      .readdirSync(filtersFolder)
-      .find((file) => file === filter.filter);
+    return new Promise((resolve, reject) => {
+      // check if filter exists else throw error
+      const isFilterValid = fs
+        .readdirSync(filtersFolder)
+        .find((file) => file === filter.filter);
 
-    if (!isFilterValid) throw new Error(`Ce ${filter.filter} n'est pas valide`);
+      if (!isFilterValid)
+        reject(new Error(`Ce ${filter.filter} n'est pas valide`));
 
-    // check if next step exists else throw error
-    if (steps[filter.next] === "undefined")
-      throw new Error(`${filter.filter} appelle une étape invalide `);
+      // check if next step exists else throw error
+      if (steps[filter.next] === "undefined")
+        reject(new Error(`${filter.filter} appelle une étape invalide `));
 
-    // import the filter
-    const filterImported = require(`./filters/${filter.filter}`);
+      // check if next step is not the current step else throw error
+      if (filter.next == key)
+        reject(
+          new Error(`${filter.filter} ne peut pas s'appeler elle-même en next`)
+        );
 
-    // check if filter imported is a function else throw error
-    if (typeof filterImported !== "function")
-      throw new Error(`${filter.filter} n'est pas une fonction`);
+      // create a worker thread with the filter params and the previous step result
+      const worker = new Worker(`./filters/${filter.filter}`, {
+        workerData: filter.params.concat(args),
+      });
 
-    // check if next step is not the current step else throw error
-    if (filter.next == key)
-      throw new Error(
-        `${filter.filter} ne peut pas s'appeler elle-même en next`
-      );
+      // generate r g b values between 0 and 255 to create a random color
+      const r = randomBetween(0, 255), 
+      const g = randomBetween(0, 255);
+      const b = randomBetween(0, 255);
 
-    // concat args with filter params from config-filters.json
-    const result = filterImported(filter.params.concat(args));
-    console.log(`Filtre ${filter.filter} terminé`);
+      // when the worker thread is ready...
+      worker.on("online", () => {
+        console.log(
+          chalk.rgb(r, g, b)(`[${key}] Starting ${filter.filter} ...`)
+        );
+      });
 
-    // if next step is not undefined, call next key step with result of current filter
-    if (filter.next) {
-      callFilter(steps[filter.next], key + 1, result);
+      // when the worker thread is done...
+      worker.on("message", (messageFromWorker) => {
+        console.log(chalk.rgb(r, g, b)(`[${key}] Finished ${filter.filter}.`));
+        resolve(messageFromWorker);
+      });
 
-      // else call the key step after the current filter withtout last filter result
-    } else {
-      if (key === Object.keys(steps).length) return;
-      callFilter(steps[`${key + 1}`], key + 1);
-    }
+      // when the worker thread throws an error...
+      worker.on("error", (err) => reject(err));
+
+      // when the worker thread is killed...
+      worker.on("exit", (code) => {
+        if (code !== 0) {
+          reject(new Error(`Arret innatendu du filtre ${filter.filter}`));
+        }
+      });
+    });
   };
 
-  callFilter(steps["1"], 1);
+  // call filter & next step recursively 
+  const callNextSteps = async (stepObject, key, ...args) => {
+    if (!stepObject.next) return callFilter(stepObject, Number(key), ...args);
+
+    stepObject.next.forEach((nextStep) => {
+      callFilter(stepObject, Number(key), ...args).then((result) =>
+        callNextSteps(steps[nextStep], key, result)
+      );
+    });
+  };
+
+  // starting point
+  const launchFilters = async () => {
+
+    // get all steps callings by the next property
+    const nextSteps = Object.entries(steps)
+      .filter(([key, value]) => value.next)
+      .flatMap(([key, value]) => value.next);
+
+    Object.entries(steps).forEach(([key, step]) => {
+
+      // if the current step is not a next step (because next step need to get the result of the previous step)
+      // == current step is a starting point
+      if (!nextSteps.includes(key)) {
+        if (!step.next) return callFilter(step, Number(key));
+
+        // execute the current step filter & the next step filter recursively with the result of the previous step
+        callFilter(step, Number(key)).then((result) =>
+          step.next.forEach((nextStep) => {
+            callNextSteps(steps[nextStep], key, result);
+          })
+        );
+      }
+    });
+  };
+
+  launchFilters();
 } catch (err) {
   console.log(err.message);
 }
-
-// switch (args[0]) {
-//   case "read":
-//     const fileReaded = read(args[1]);
-//     console.log(fileReaded);
-//     break;
-
-//   case "write":
-//     const fileWrited = write(args[1], args[2]);
-//     console.log(fileWrited);
-//     break;
-
-//   case "reverse":
-//     const textReversed = reverse(args[1]);
-//     console.log(textReversed);
-//     break;
-
-//   default:
-//     console.group("Liste des fonctions :");
-//     fs.readdirSync(filtersFolder).forEach((file) => {
-//       console.log("-", file.split(".")[0]);
-//     });
-//     console.groupEnd();
-// }

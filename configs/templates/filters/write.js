@@ -1,16 +1,15 @@
 const fs = require("fs");
+const { parentPort, workerData } = require("worker_threads");
 
-module.exports = (input) => {
-  try {
-    if (!input[0] || !input[1])
-      throw new Error("Veuillez saisir un texte et un fichier de destination");
+try {
+  if (!workerData[0] || !workerData[1])
+    throw new Error("Veuillez saisir un texte et un fichier de destination");
 
-    fs.writeFileSync(input[0], input[1], "utf8");
-    return "File writted";
-  } catch (err) {
-    if (!input[0] || !input[1])
-      throw new Error("Veuillez saisir un texte et un fichier de destination");
+  fs.writeFileSync(workerData[0], workerData[1], "utf8");
+  return parentPort.postMessage("File writted");
+} catch (err) {
+  if (!workerData[0] || !workerData[1])
+    throw new Error("Veuillez saisir un texte et un fichier de destination");
 
-    throw new Error("Erreur inattendue");
-  }
-};
+  throw new Error("Erreur inattendue");
+}

@@ -3,21 +3,38 @@
     "1": {
       "filter": "read.js",
       "params": ["./text.txt"],
-      "next": "2"
+      "next": ["2", "3"]
     },
     "2": {
       "filter": "capitalize.js",
       "params": [],
-      "next": "3"
+      "next": ["4"]
     },
     "3": {
       "filter": "reverse.js",
       "params": [],
-      "next": "4"
+      "next": ["5"]
     },
     "4": {
       "filter": "write.js",
+      "params": ["./textOut1.txt"]
+    },
+    "5": {
+      "filter": "write.js",
+      "params": ["./textOut2.txt"]
+    },
+    "6": {
+      "filter": "read.js",
       "params": ["./text.txt"]
+    },
+    "7": {
+      "filter": "capitalize.js",
+      "params": ["test en min de base"],
+      "next": ["9"]
+    },
+    "9": {
+      "filter": "write.js",
+      "params": ["./textOut3.txt"]
     }
   }
 }

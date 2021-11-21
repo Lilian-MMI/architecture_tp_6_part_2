@@ -1,9 +1,16 @@
-// input is an array with params from config-filters.json
-module.exports = (input) => {
-  try {
-    return input[0];
-  } catch (err) {
-    // if there is an error, return the error message
-    throw new Error("Erreur inattendue");
-  }
-};
+const fs = require("fs");
+const { parentPort, workerData } = require("worker_threads");
+
+try {
+  // to access your parent data you can use the workerData variable
+  let message = workerData[0];
+
+  // filter code goes here
+  message.toUpperCase();
+
+  // when your filter is done, you can send the result to the main thread by using the parentPort.postMessage method
+  return parentPort.postMessage(message);
+} catch (err) {
+  // throw custom error here
+  throw new Error("Erreur inattendue");
+}
