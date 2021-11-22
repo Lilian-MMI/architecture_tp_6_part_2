@@ -13,7 +13,7 @@ A la racine du projet on retrouve un fichier <i>app.js</i>. Ce fichier analyse l
 Le dossier <b>configs</b> quant à lui contient un dossier <b>templates</b> qui reprend tous les fichiers nécessaires lors de la création d'un nouveau projet. A la racine du dossier on retrouve aussi <i>defaultFiter.js</i> qui est le fichier par défaut ajouter à un projet via la commande add_step. 
 Chaque nouveau projet est crée dans le dossier <b>projects</b> avec les fichiers de configs précedent.
 On retrouve également les fichiers propres à l'environnement nodejs, et un .gitignore.
-
+<br>
 <br>
 Voici l'arborescence du framework :
 
