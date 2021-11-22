@@ -9,7 +9,13 @@ try {
   return parentPort.postMessage("File writted");
 } catch (err) {
   if (!workerData[0] || !workerData[1])
-    throw new Error("Veuillez saisir un texte et un fichier de destination");
+    return parentPort.postMessage({
+      error: true,
+      err: err.message,
+    });
 
-  throw new Error("Erreur inattendue");
+  return parentPort.postMessage({
+    error: true,
+    err: "Erreur inattendue",
+  });
 }

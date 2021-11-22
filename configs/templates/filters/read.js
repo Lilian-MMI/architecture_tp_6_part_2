@@ -10,6 +10,14 @@ try {
   // when your filter is done, you can send the result to the main thread by using the parentPort.postMessage method
   return parentPort.postMessage(file.toUpperCase());
 } catch (err) {
-  if (!workerData[0]) throw new Error("Fichier introuvable");
-  throw new Error("Erreur inattendue");
+  if (!workerData[0])
+    return parentPort.postMessage({
+      error: true,
+      err: err.message,
+    });
+
+  return parentPort.postMessage({
+    error: true,
+    err: "Erreur inattendue",
+  });
 }
