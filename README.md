@@ -50,7 +50,9 @@ Description: Créé l'arborescence projet avec un fichier de configuration vierg
 Alias: n
 
 Paramètres: 
-- nom du projet (obligatoire) <b>Ajouter un filtre</b>
+- nom du projet (obligatoire)
+
+<b>Ajouter un filtre</b>
 
 > ppft add_filter < filterName > < projectName >
 
@@ -60,7 +62,9 @@ Alias: af
 
 Paramètres: 
 - nom du filtre (obligatoire)
-- nom du projet (facultative via choose_project commande) <b>Supprimer un filtre</b>
+- nom du projet (facultative via choose_project commande)
+
+<b>Supprimer un filtre</b>
 
 > ppft del_filter < filterName > < projectName >
 
@@ -70,7 +74,9 @@ Alias: df
 
 Paramètres: 
 - nom du filtre (obligatoire)
-- nom du projet (facultative via choose_project commande) <b>Ajouter une étape</b>
+- nom du projet (facultative via choose_project commande) 
+
+<b>Ajouter une étape</b>
 
 > ppft add_step < idStep > < filterName > < nextStepId >
 
@@ -82,7 +88,9 @@ Paramètres:
 - id de l'étape (obligatoire)
 - nom du filtre (obligatoire)
 - id de l'étape suivante (facultative)
-- nom du projet (facultative via choose_project commande) <b>Supprimer un filtre</b>
+- nom du projet (facultative via choose_project commande) 
+
+<b>Supprimer un filtre</b>
 
 > ppft del_filter < filterName > < projectName >
 
@@ -93,7 +101,9 @@ Alias: df
 Paramètres: 
 
 - nom du filtre (obligatoire)
-- nom du projet (facultative via choose_project commande) <b>Supprimer une étape du fichier de configuration</b>
+- nom du projet (facultative via choose_project commande)
+
+<b>Supprimer une étape du fichier de configuration</b>
 
 > ppft del_step < idStep > < projectName >
 
@@ -104,7 +114,9 @@ Alias: ds
 
 Paramètres: 
 - id de l'étape (obligatoire)
-- nom du projet (facultative via choose_project commande) <b>Choisir un dossier de travail</b>
+- nom du projet (facultative via choose_project commande)
+
+<b>Choisir un dossier de travail</b>
 
 > ppft choose_project < projectName >
 
