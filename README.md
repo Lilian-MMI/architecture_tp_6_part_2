@@ -108,7 +108,7 @@ Paramètres:
 > ppft del_step < idStep > < projectName >
 
 Description: Supprime une step du fichier de configuration <i>config-filters.json</i>.
-<b>Attention ! Les étapes orphelines ne seront pas supprimé.</b>
+<b>Attention ! Les étapes orphelines ne seront pas supprimées.</b>
 
 Alias: ds
 
