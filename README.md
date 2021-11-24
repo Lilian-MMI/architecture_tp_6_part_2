@@ -4,8 +4,8 @@ Ce framework offre un CLI (command line interface) facilitant l'implémentation 
 Dans le cas de notre framework, cela signifie que plusieurs filtres peuvent s'exécuter en parallèle, sans bloquer les autres pour autant. Voici une comparaison de fonctionnement entre un framework (nos concurrents) qui exécute des filtres à la suite et un framework (nous) qui exécute les filtres en parallèle.
 <img src="https://images.ctfassets.net/hspc7zpa5cvq/20h5efXHT4bQbuf44mdq2H/a40944191d031217a9169b17a8ef35d6/worker-diagram_2x__1_.jpg"> <br />
 À la racine du projet on retrouve un fichier <i>app.js</i>. Ce fichier analyse les commandes, les paramètres, et les options passer dans le terminal, afin de vous fournir un CLI optimal. En fonction des commandes passer dans ce terminal, <i>app.js</i> appellera les commandes correspondante. Ces commandes sont répertoriées dans le dossier <b>commands</b>. Ces commandes prennent un ou plusieurs paramètres, optionnel ou obligatoire. Nous reparlerons des commandes disponibles dans la section suivante.
-Le dossier <b>confits</b> quant à lui contient un dossier <b>templates</b> qui reprend tous les fichiers nécessaires lors de la création d'un nouveau projet. À la racine du dossier on retrouve aussi <i>defaultFiter.js</i> qui est le fichier par défaut ajouter à un projet via la commande add_step. 
-Chaque nouveau projet est créé dans le dossier <b>projets</b> avec les fichiers de confits précédent.
+Le dossier <b>configs</b> quant à lui contient un dossier <b>templates</b> qui reprend tous les fichiers nécessaires lors de la création d'un nouveau projet. À la racine du dossier on retrouve aussi <i>defaultFiter.js</i> qui est le fichier par défaut ajouter à un projet via la commande add_step. 
+Chaque nouveau projet est créé dans le dossier <b>projets</b> avec les fichiers de configs précédent.
 On retrouve également les fichiers propres à l'environnement nodejs, et un .gitignore.
 <br> <br>
 Voici l'arborescence du framework : <br>
